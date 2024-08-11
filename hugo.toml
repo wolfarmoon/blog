@@ -109,4 +109,4 @@ url = "https://bsky.app/profile/wolfarmoon.dev"
 
 [[params.socialIcons]]
 name = "Rss"
-url = "index.xml"
+url = "/index.xml"
