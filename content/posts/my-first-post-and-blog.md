@@ -16,6 +16,6 @@ I don't really know, but I think this is a good place to share something relevan
 By the time being I'm not planning to add a comment section until I make my own comment system. I don't really like to -and will not- depend on services like Disqus, for several reasons like the nasty advertisement I've seen on disqus and possible tracking and privacy concerns I have with . Meanwhile, I will open a one-way email address to receive comments. But now, let's see what comes first: my own comment system, or an email address.
 
 ## Final thoughts
-To conclude this first post, I want to invite you to do somehting similar if you can or want. I think it is nice to have a place you own, free from distractions like on social media. Now, go ahead and add this site's RRS to your RRS feed reader of choice!
+To conclude this first post, I want to invite you to do somehting similar if you can or want. I think it is nice to have a place you own, free from distractions like on social media. Now, go ahead and add this site's RSS to your RSS feed reader of choice!
 
 Nice day or night! Bye~
