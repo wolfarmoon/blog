@@ -2,7 +2,6 @@
 title = 'My First Post & Blog'
 date = 2024-08-10T20:19:46-05:00
 draft = false
-description = "a"
 +++
 
 Hello world! I've been thinking about creating a blog since I started my website. So I discovered this framework to build static websites called <a href="https://gohugo.io" target="_blank">Hugo</a>. I'm using, by the way, a theme called "Hugo blog awesome", created by Sid. You can find it on his Github - his theme is credited on the footer! 
