@@ -5,8 +5,20 @@
     <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Wolfarmoon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language>
-    <lastBuildDate>Sat, 10 Aug 2024 20:19:46 -0500</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sun, 04 Jan 2026 01:00:41 -0500</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(1/2) 2026 Aspitations and a brief reflection of what was last year.</title>
+      <link>http://localhost:1313/posts/2026-aspitations-and-a-brief-reflection/</link>
+      <pubDate>Sun, 04 Jan 2026 01:00:41 -0500</pubDate>
+      
+      <guid>http://localhost:1313/posts/2026-aspitations-and-a-brief-reflection/</guid>
+      
+      <description>&lt;p&gt;It&amp;rsquo;s true that I may or may not accomplish what im about to menction right now, however, I want to keep a record of them so my future self can pressure themself into getting an extra mile.&lt;/p&gt;
+&lt;p&gt;Last year was a rollercoaster of emotions and overall, experiences. Completing a fucking diploma programme in kamikaze mode and somehow surviving it gave me a good overview of a worst case scenario of collage (I&amp;rsquo;ve been told is the other way around. I may retract my words later). I know it&amp;rsquo;s ironical to say that a kamikaze survived but you get the thing. I got love, I got hate, i got war, peace and love again, yet what matters the most is how I was able to manage all of these things while keeping up with a mentally demanding curriculum. Lucky me, the programme is over, but now i&amp;rsquo;m studying to get accepted in CS and thats hard as hell as well but, i&amp;rsquo;ve been in worse.&lt;/p&gt;</description>
+      
+    </item>
+    
     <item>
       <title>My First Post &amp; Blog</title>
       <link>http://localhost:1313/posts/my-first-post-and-blog/</link>
@@ -14,8 +26,8 @@
       
       <guid>http://localhost:1313/posts/my-first-post-and-blog/</guid>
       
-      <description>Hello world! I&amp;rsquo;ve been thinking about creating a blog since I started my website. So I discovered this framework to build static websites called Hugo. I&amp;rsquo;m using, by the way, a theme called &amp;ldquo;Hugo blog awesome&amp;rdquo;, created by Sid. You can find it on his Github - his theme is credited on the footer!
-Yesterday I found this little article about &amp;ldquo;Setting up a blog on Cloudflare Pages&amp;rdquo; written by Sapico.</description>
+      <description>&lt;p&gt;Hello world! I&amp;rsquo;ve been thinking about creating a blog since I started my website. So I discovered this framework to build static websites called &lt;a href=&#34;https://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt;. I&amp;rsquo;m using, by the way, a theme called &amp;ldquo;Hugo blog awesome&amp;rdquo;, created by Sid. You can find it on his Github - his theme is credited on the footer!&lt;/p&gt;
+&lt;p&gt;Yesterday I found &lt;a href=&#34;https://blog.sapico.me/posts/setting-up-a-blog-on-cloudflare-pages/&#34; target=&#34;_blank&#34;&gt;this little article&lt;/a&gt; about &amp;ldquo;Setting up a blog on Cloudflare Pages&amp;rdquo; written by Sapico. It was a bit of a trouble to set up the page since hugo wasn&amp;rsquo;t rendering locally and the deployment took a bit at first, but now I managed to get the theme working at least locally, and I&amp;rsquo;ll if it work publishing this post.&lt;/p&gt;</description>
       
     </item>
     
