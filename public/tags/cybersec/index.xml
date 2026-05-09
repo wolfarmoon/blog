@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CyberSec on Wolfarmoon</title>
+    <link>http://localhost:1313/tags/cybersec/</link>
+    <description>Recent content in CyberSec on Wolfarmoon</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 May 2026 23:53:51 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/cybersec/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Got Hacked? What to do next</title>
+      <link>http://localhost:1313/blog/got-hacked-what-do-next/</link>
+      <pubDate>Fri, 08 May 2026 23:53:51 -0500</pubDate>
+      <guid>http://localhost:1313/blog/got-hacked-what-do-next/</guid>
+      <description>&lt;p&gt;I’m writing this quick continence guide on “What to do while and after getting hacked” as a really close friend of mine got most of their accounts compromised, and I’ve been helping through since almost day-zero of the incident. By the time I’m writing, we are attempting to recover a Minecraft account – which by the way, showed to us that Microslop support is really stubborn.&lt;/p&gt;&#xA;&lt;p&gt;Getting your accounts compromised or stolen is pretty common, and you shouldn’t be ashamed of seeking help, no one’s gonna judge you, unless you are in the wrong place, but guess what, you are not.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

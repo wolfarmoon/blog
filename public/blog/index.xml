@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Wolfarmoon</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Wolfarmoon</description>
+    <title>Blogs on Wolfarmoon</title>
+    <link>http://localhost:1313/blog/</link>
+    <description>Recent content in Blogs on Wolfarmoon</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 02:00:00 -0500</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Got Hacked? What to do next</title>
       <link>http://localhost:1313/blog/got-hacked-what-do-next/</link>
@@ -21,13 +21,6 @@
       <pubDate>Sat, 10 Aug 2024 20:19:46 -0500</pubDate>
       <guid>http://localhost:1313/blog/my-first-post-and-blog/</guid>
       <description>&lt;p&gt;Hello world! I&amp;rsquo;ve been thinking about creating a blog since I started my website. So I discovered this framework to build static websites called &lt;!-- raw HTML omitted --&gt;Hugo&lt;!-- raw HTML omitted --&gt;. I&amp;rsquo;m using, by the way, a theme called &amp;ldquo;Hugo blog awesome&amp;rdquo;, created by Sid. You can find it on his Github - his theme is credited on the footer!&lt;/p&gt;&#xA;&lt;p&gt;Yesterday I found &lt;!-- raw HTML omitted --&gt;this little article&lt;!-- raw HTML omitted --&gt; about &amp;ldquo;Setting up a blog on Cloudflare Pages&amp;rdquo; written by Sapico. It was a bit of a trouble to set up the page since hugo wasn&amp;rsquo;t rendering locally and the deployment took a bit at first, but now I managed to get the theme working at least locally, and I&amp;rsquo;ll if it work publishing this post.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title></title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;m Wolfarmoon, a furry, CS student, game developer, musician and tinker maniac. I usually do art aswell. In this blog you&amp;rsquo;ll find what I&amp;rsquo;m working on and more random stuff.&lt;/p&gt;&#xA;&lt;p&gt;I upload things once in a while, so i&amp;rsquo;d do appreciate if you &lt;a href=&#34;http://localhost:1313/index.xml&#34;&gt;aggregate this site&lt;/a&gt; on your RSS/ATOM feed.&lt;/p&gt;&#xA;&lt;p&gt;Thank you for visiting &amp;lt;3&lt;/p&gt;&#xA;&lt;p&gt;-wolfarmoon&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

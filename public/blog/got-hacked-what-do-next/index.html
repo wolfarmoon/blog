@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" type="image/png" href="/avatar.png">
+<title>Got Hacked? What to do next</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+  integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap');
+
+  .font-jersey {
+
+    font-family: "Ubuntu Sans Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+
+  .md-content .katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .md-content .katex-display>.katex {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .swup-transition-fade {
+    opacity: 1;
+    transition: 300ms ease-in-out;
+  }
+
+  .is-animating .swup-transition-fade {
+    opacity: 0;
+  }
+
+  .swup-transition-fade {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  html.is-animating .swup-transition-fade {
+    opacity: 0;
+  }
+
+  html.is-animating {
+    cursor: progress;
+  }
+
+  html.is-leaving .swup-transition-fade {
+    opacity: 0;
+  }
+</style>
+
+<script src="https://unpkg.com/swup@4"></script>
+<script src="https://unpkg.com/@swup/preload-plugin@3"></script>
+<script src="https://unpkg.com/@swup/progress-plugin@3"></script>
+<script>
+  const swup = new Swup({
+    containers: ['#swup'],
+    animationSelector: '[class*="swup-transition-"]',
+    cache: true,
+    preload: true,
+    animateHistoryBrowsing: true,
+
+    plugins: [
+      new SwupPreloadPlugin(),
+      new SwupProgressPlugin()
+    ]
+  })
+  window.swup = swup
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  crossorigin="anonymous"></script>
+
+<script>
+  
+
+  
+  const KATEX_CONFIG = {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+    throwOnError: false
+  };
+
+  
+  function renderKatex() {
+    
+    if (typeof renderMathInElement !== "function") {
+      console.log("⏳ Waiting for KaTeX to load...");
+      return;
+    }
+
+    
+    const contentArea = document.getElementById('swup') || document.body;
+
+    try {
+      renderMathInElement(contentArea, KATEX_CONFIG);
+      console.log("✅ KaTeX rendered successfully");
+    } catch (error) {
+      console.error("❌ KaTeX rendering error:", error);
+    }
+  }
+
+  
+  function renderKatexWithRetry(maxRetries = 10, delay = 100) {
+    let attempts = 0;
+
+    const attempt = () => {
+      if (typeof renderMathInElement === "function") {
+        renderKatex();
+      } else if (attempts < maxRetries) {
+        attempts++;
+        setTimeout(attempt, delay);
+      } else {
+        console.warn("⚠️ KaTeX auto-render not available after", maxRetries, "attempts");
+      }
+    };
+
+    attempt();
+  }
+
+  
+  function setupSwupIntegration() {
+    
+    if (window.swup) {
+      window.swup.hooks.on('page:view', () => {
+        console.log("🔄 Swup transition complete, re-rendering KaTeX...");
+        
+        setTimeout(() => renderKatexWithRetry(3, 50), 50);
+      });
+      console.log("✅ KaTeX-Swup integration ready");
+    } else {
+      
+      setTimeout(setupSwupIntegration, 100);
+    }
+  }
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("🚀 Initializing KaTeX...");
+
+    
+    renderKatexWithRetry();
+
+    
+    setupSwupIntegration();
+  });
+
+  
+  window.renderKatex = renderKatex;
+</script>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  let initialized = false;
+
+  function renderMermaid() {
+    const contentArea = document.getElementById('swup') || document.body;
+    const mermaidBlocks = contentArea.querySelectorAll('.language-mermaid, .mermaid');
+
+    if (mermaidBlocks.length === 0) {
+      console.log("ℹ️ No mermaid blocks found on this page");
+      return;
+    }
+
+    if (!initialized) {
+      mermaid.initialize({startOnLoad: false, theme: 'dark'});
+      initialized = true;
+    }
+
+    mermaidBlocks.forEach(el => {
+      if (el.dataset.processed === 'true') {
+        const source = el.dataset.mermaidSource;
+        if (source) {
+          el.innerHTML = source;
+          el.removeAttribute('data-processed');
+        }
+      } else {
+        el.dataset.mermaidSource = el.textContent;
+      }
+    });
+
+    mermaid.run({nodes: mermaidBlocks})
+      .then(() => console.log("✅ Mermaid rendered successfully"))
+      .catch(err => console.error("❌ Mermaid rendering error:", err));
+  }
+
+  function renderMermaidWithRetry(maxRetries = 10, delay = 100) {
+    let attempts = 0;
+
+    const attempt = () => {
+      if (typeof mermaid.initialize === "function") {
+        renderMermaid();
+      } else if (attempts < maxRetries) {
+        attempts++;
+        setTimeout(attempt, delay);
+      } else {
+        console.warn("⚠️ Mermaid auto-render not available after", maxRetries, "attempts");
+      }
+    };
+
+    attempt();
+  }
+
+  
+  function setupSwupIntegration() {
+    
+    if (window.swup) {
+      window.swup.hooks.on('page:view', () => {
+        console.log("🔄 Swup transition complete, re-rendering mermaid...");
+        
+        setTimeout(() => renderMermaidWithRetry(3, 50), 50);
+      });
+      console.log("✅ Mermaid-Swup integration ready");
+    } else {
+      
+      setTimeout(setupSwupIntegration, 100);
+    }
+  }
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("🚀 Initializing KaTeX...");
+
+    
+    renderMermaidWithRetry();
+
+    
+    setupSwupIntegration();
+  });
+
+
+
+</script>
+
+
+</head>
+
+<body class="min-h-screen flex flex-col bg-black font-jersey text-white text-3xl">
+  <header>
+    <div class="sticky absolute top-0 z-50">
+  <nav class="w-full border-b border-gray-800 bg-[#070709]/95 backdrop-blur-sm text-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        
+        <div class="flex items-center gap-3">
+
+          <a href='http://localhost:1313/' class="flex items-center gap-3 group" aria-label="Homepage">
+
+            <img src='https://wolfarmoon.dev/favicon.ico' alt="Wolfarmoon"
+              class="w-10 h-10 rounded-sm border-2 border-gray-700 object-cover transition-transform duration-300 transform group-hover:scale-105"
+              style="animation: border-breathe 4s ease-in-out infinite;" />
+            <span class="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold tracking-wide">
+              Wolfarmoon
+              <span class="inline-block ml-2" style="animation: flicker 1.6s steps(2, end) infinite;">_</span>
+            </span>
+          </a>
+        </div>
+
+        
+        <div class="flex items-center gap-4">
+          
+          <div class="hidden md:flex items-center">
+            
+
+<nav aria-label="Primary" class="w-full">
+  <ul
+    class="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-2 md:space-y-0 sm:text-lg md:text-xl lg:text-3xl"><li>
+      <a aria-current="true" href="/blog/"class="group inline-flex items-center px-3 py-2 rounded-sm text-gray-200 hover:text-white transition-colors duration-200">
+        <span class="relative inline-block">
+          <span>Blog</span>
+          
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </span>
+      </a>
+    </li><li>
+      <a href="/"class="group inline-flex items-center px-3 py-2 rounded-sm text-gray-200 hover:text-white transition-colors duration-200">
+        <span class="relative inline-block">
+          <span>Personal</span>
+          
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+          </div>
+
+          
+          <div class="md:hidden">
+            <button id="nav-toggle" aria-controls="mobile-menu" aria-expanded="false"
+              class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              aria-label="Open menu">
+              <svg class="h-6 w-6 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div id="mobile-menu" class="md:hidden hidden pb-4">
+        
+        
+
+<nav aria-label="Primary" class="w-full">
+  <ul
+    class="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-2 md:space-y-0 sm:text-lg md:text-xl lg:text-3xl"><li>
+      <a aria-current="true" href="/blog/"class="group inline-flex items-center px-3 py-2 rounded-sm text-gray-200 hover:text-white transition-colors duration-200">
+        <span class="relative inline-block">
+          <span>Blog</span>
+          
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </span>
+      </a>
+    </li><li>
+      <a href="/"class="group inline-flex items-center px-3 py-2 rounded-sm text-gray-200 hover:text-white transition-colors duration-200">
+        <span class="relative inline-block">
+          <span>Personal</span>
+          
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+      </div>
+    </div>
+  </nav>
+
+  
+  <style>
+    @keyframes flicker {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      10% {
+        opacity: 0.2;
+        transform: translateY(-1px);
+      }
+
+      20% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes border-breathe {
+      0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.06);
+      }
+
+      50% {
+        box-shadow: 0 0 18px 6px rgba(99, 102, 241, 0.03);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.06);
+      }
+    }
+  </style>
+
+  
+  <script>
+    (function () {
+      const btn = document.getElementById('nav-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', () => {
+        const open = menu.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+  </script>
+</div>
+
+  </header>
+
+  <main class="flex-1 w-full">
+    <div id="swup" class="swup-transition-fade">
+      <div class="max-w-3xl lg:max-w-6xl xl:max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-10 lg:py-16">
+        
+<div class="grid grid-cols-12 gap-8">
+  
+  <aside class="hidden lg:block col-span-3">
+    <div class="sticky top-24">
+      <div class="mb-3 text-xs uppercase tracking-widest text-gray-500">Table of contents</div><nav class="toc border border-gray-800/70 bg-[#070709] rounded-sm p-4 text-base text-gray-300">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#disable-and-lock-your-accounts">Disable and lock your accounts</a></li>
+    <li><a href="#what-do-i-do-with-my-computer">What do I do with my computer</a></li>
+    <li><a href="#are-passwords-secure-nowadays">Are passwords secure nowadays?</a></li>
+    <li><a href="#how-to-keep-passwords-safe">How to keep passwords safe?</a></li>
+    <li><a href="#two-factor-autentication-2fa">Two-Factor Autentication (2FA)</a></li>
+    <li><a href="#physical-keys">Physical Keys</a></li>
+  </ul>
+</nav>
+      </nav></div>
+  </aside>
+
+  
+  <article class="col-span-12 lg:col-span-9">
+    <header class="mb-6">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl tracking-wide text-white">
+    Got Hacked? What to do next
+  </h1>
+
+  <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base text-gray-400">
+    <span class="font-mono">May 09, 2026 • 02:00</span>
+    <span class="text-gray-700">/</span>
+    <span class="font-mono">7 min read</span>
+  </div><div class="mt-3 flex flex-wrap gap-2"><a href="/%20tags/cybersec4normies"
+      class="px-2 py-0.5 text-xs sm:text-sm rounded-sm border border-gray-700/70 text-gray-300 bg-black/30 hover:text-white hover:border-indigo-400/40 transition-colors">
+      #CyberSec4Normies
+    </a><a href="/%20tags/cybersec"
+      class="px-2 py-0.5 text-xs sm:text-sm rounded-sm border border-gray-700/70 text-gray-300 bg-black/30 hover:text-white hover:border-indigo-400/40 transition-colors">
+      #CyberSec
+    </a></div></header>
+
+
+    
+    <div class="lg:hidden mb-6">
+      <details class="border border-gray-800/70 bg-[#070709] rounded-sm">
+        <summary class="cursor-pointer select-none px-4 py-3 text-gray-200 hover:text-white transition-colors">
+          Table of contents
+        </summary>
+        <div class="px-4 pb-4 toc text-base text-gray-300">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#disable-and-lock-your-accounts">Disable and lock your accounts</a></li>
+    <li><a href="#what-do-i-do-with-my-computer">What do I do with my computer</a></li>
+    <li><a href="#are-passwords-secure-nowadays">Are passwords secure nowadays?</a></li>
+    <li><a href="#how-to-keep-passwords-safe">How to keep passwords safe?</a></li>
+    <li><a href="#two-factor-autentication-2fa">Two-Factor Autentication (2FA)</a></li>
+    <li><a href="#physical-keys">Physical Keys</a></li>
+  </ul>
+</nav>
+        </div>
+      </details>
+    </div>
+
+    <div class="border border-gray-800/70 bg-[#070709] rounded-sm p-5 sm:p-7">
+
+      <div class="md-content text-lg sm:text-xl leading-relaxed text-gray-200">
+        <p>I’m writing this quick continence guide on “What to do while and after getting hacked” as a really close friend of mine got most of their accounts compromised, and I’ve been helping through since almost day-zero of the incident. By the time I’m writing, we are attempting to recover a Minecraft account – which by the way, showed to us that Microslop support is really stubborn.</p>
+<p>Getting your accounts compromised or stolen is pretty common, and you shouldn’t be ashamed of seeking help, no one’s gonna judge you, unless you are in the wrong place, but guess what, you are not.</p>
+<hr>
+<h2 id="disable-and-lock-your-accounts" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      Disable and lock your accounts
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+<ul>
+<li>If you have bank accounts linked with your compromised accounts, call your bank, or make use of the tools they provide and suspend your account temporarily until the threat is gone. However, if you are certain that the hackers got your card credentials (or just want to be safe), I’d suggest making a new bank account.</li>
+<li>If your Steam account is compromised, contact Steam Support, explain your case, provide proofs and they will do the work. They are a best example of support that comes to my mind. Just give them 2 to 4 days and your account will be back, and I’m talking from experience.</li>
+<li>If your Microsoft account got compromised, and it’s worth recovering, you should pay a visit to the <a href="%5Bhttps://discord.gg/uYRTAEhheP%5D(https://discord.gg/uYRTAEhheP)">Microsoft account recovery help</a> discord server, they explain thoroughly the process in #documentation and the helpers can guide you through the processes. If you come from there, the next sections may help you ^^
+<ul>
+<li>Microsoft does not care about you, and the only way of getting what you want is being annoying.</li>
+</ul>
+</li>
+<li>If your Roblox (or any game) account got hacked, contacting support is the best way to go, i think. I haven&rsquo;t witnessed those processes.
+Generally speaking, what you wanna do is make attackers and/or people that bought your account unable to use it.</li>
+</ul>
+<h2 id="what-do-i-do-with-my-computer" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      What do I do with my computer
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+
+
+
+
+
+
+
+<figure class="my-8">
+  <blockquote
+    class="relative rounded-xl border border-white/[0.07] bg-black/40 px-5 py-4 text-gray-300 transition-shadow duration-200 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.08)]">
+
+    <span class="absolute inset-y-3 left-0 w-0.5 rounded-full bg-blue-400/20"></span>
+    <span class="absolute right-4 top-2.5 select-none font-mono text-[0.6rem] tracking-widest text-white/10">///</span>
+
+    <div
+      class="font-mono text-sm leading-relaxed [&_code]:rounded [&_code]:bg-white/5 [&_code]:px-1.5 [&_code]:py-0.5 [&_em]:text-gray-400 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-white">
+      <p>Before resetting your computer, make sure to log your device ID and other &ldquo;volatile&rdquo; identifiers that may help you recovering your accounts, back up your important files, bookmarks and sensitive information.</p>
+
+    </div>
+  </blockquote>
+</figure>
+
+
+<p>In my opinion, hunting down the Trojan can be time consuming, and in most of the cases, assuming you are not to deep in the rabbit hole of CyberSec, your attempts might be unfruitful.  On the other hand, <a href="https://www.howtogeek.com/202590/stop-trying-to-clean-your-infected-computer-just-nuke-it-and-reinstall-windows/">nuking your computer</a> (reinstalling its OS) is the safest bet, as nothing will probably survive to that.</p>
+<p>I&rsquo;m aware that most of the ones reading this use Windows, so yeah. Find a USB stick, flash it with Window&rsquo;s ISO installer, and you are good to go. I won&rsquo;t go into details about that now, and I think that the license should pass down to the new installation. Remember that you can always use a KMS server to activate you Windows (I forked  Microsoft Windows and Office KMS Setup)</p>
+<p>Now you may want to install an anti-virus, which for Windows I honestly disregard, but I find it better to make a reality check, and search for the reputation of any given site or binary, you can use tools like [VirusTotal.com]</p>
+<h2 id="are-passwords-secure-nowadays" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      Are passwords secure nowadays?
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+<p>First of all, let&rsquo;s define <em>secure</em>&hellip; For me:</p>
+<ol>
+<li>
+<p>Longer than 16 characters</p>
+</li>
+<li>
+<p>Alphanumeric</p>
+</li>
+<li>
+<p>No recognizable words. For  example instead of <code>PrettySecurePassword123</code> you do <code>eUPTrtCrSeyPseoRa2Sdw31</code>; the same but messed up a bit.</p>
+</li>
+<li>
+<p>Spice it up: Replace or add non-alphanumeric characters (if non-latin characters or Unicode characters are available, USE THEM) For example: <code>æPTr#CrSeyPseoRa2Sdwð¼</code>
+So, how secure a passwords is, is a matter of not containing dictionary words and being long long enough that the time required to crack it surpasses the Sun&rsquo;s lifetime. In my example, both <code>eUPTrtCrSeyPseoRa2Sdw31</code> and <code>æPTr#CrSeyPseoRa2Sdwð¼</code> are strong passwords but I&rsquo;d rather use the FOUR THOUSAND TRILLION TRILLION YEARS one just to be safe.
+However, keep in mind that you MUST change your password when it gets <a href="https://haveibeenpwned.com/Passwords">pwnd or you believe it is — you can</a>.</p>
+</li>
+</ol>
+<p><img class="mx-auto my-6 rounded-md border border-gray-800/70 bg-black/20" src="/blog/got-hacked-what-do-next/password-security.png" loading="lazy" decoding="async"
+  alt=""></p>
+<h2 id="how-to-keep-passwords-safe" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      How to keep passwords safe?
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+<p>The best way for me to keep passwords safe is not to know them :p. Using a password manager that generates random secure passwords fits best to me. Secure passwords here are: 32 to 64 characters long, following my previous definition of secure, however, now are completely random. (For the nerds, I&rsquo;ll make a post about my source of entropy later)</p>
+<p>Some good ones are: Proton Pass, KeepassXC, KeePass and even <code>pass</code>.</p>
+<p>Local password managers are safe, nevertheless, that depend of how secure the device and storage are. If your device gets compromised and the malware is smart enough to search through password manager files, you are cooked. This is kind of solved by adding a master password, but hence its nature, it could become a single point of failure.</p>
+<h2 id="two-factor-autentication-2fa" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      Two-Factor Autentication (2FA)
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+<p>Having a second factor of authentication couples well with these hard passwords. Even if the attackers get the, they&rsquo;ll eventually land on a page requesting a TOTP code or even an SMS.</p>
+<p>Proton Authenticator has work well for me, it allows you to set a password to retrieve the codes, so in case your data gets stolen, it wouldn&rsquo;t be so useful. You can also sync them with other devices, but don&rsquo;t know you, but I don&rsquo;t trust sending these codes through the internet (even to Proton servers).</p>
+<h2 id="physical-keys" class="mt-8 mb-3 text-xl sm:text-2xl text-white">
+    <span class="relative inline-block">
+      Physical Keys
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h2>
+<p>These are, for me, the holy grail of security, as the only thing you need is a device that resembles a USB stick. You plug it and <em>voilà</em>: authenticated on whatever site (that allows it).</p>
+<p>I won&rsquo;t go into technical details about them here as this post is exclusively for anyone, not just nerds. Just imagine that when you register on a website, the key creates a unique cryptographic key-pair (a public and a private). Each time you want to log in, the website sends you a random code, that when you press the button on your key, it signs the result with its private key. Now the website checks if the cryptographic fingerprint matches. If it does, you are in, and if it doesn&rsquo;t you are out, bad guy.</p>
+<h1 id="conclusion" class=" mt-8 mb-3 text-2xl sm:text-3xl text-white">
+    <span class="relative inline-block">
+      Conclusion
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h1>
+<p>The knowledge of security on the internet is essential, as scammers or hackers rely on unaware victims to get what they want. Remember, it&rsquo;s easier to hack the human being than the machine. And thus, we should think cold-headed, before clicking on a link or submitting a form, on the implications it may have. I invite you to research more about the most common malware types, the cyber attacks, the techniques scammers use to deceive you into clicking on a link and more.</p>
+<p>I want to spread the word, if you are more knowledgeable on cyber security than I&rsquo;am, and want to point something out here or suggest explaining further I&rsquo;ll be glad to listen to you. Check out the last section :3</p>
+<h1 id="afterword" class=" mt-8 mb-3 text-2xl sm:text-3xl text-white">
+    <span class="relative inline-block">
+      Afterword
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h1>
+<p>I want to &ldquo;donate&rdquo; this article to Microsoft Account Recovery Help Server on Discord, as a gift for the labour and effort of their helper and admin team. They have documented the recovery process very well, and help people go through it. Microsoft is evil, and their support team is shit&hellip; So a shout to MARS and its community for facilitating this process and motivating people while fighting for their accounts! <a href="https://discord.gg/uYRTAEhheP">https://discord.gg/uYRTAEhheP</a></p>
+<hr>
+<h1 id="contribution-to-this-post" class=" mt-8 mb-3 text-2xl sm:text-3xl text-white">
+    <span class="relative inline-block">
+      Contribution to this post
+      <span
+        class="absolute left-0 -bottom-1 h-px w-0 bg-indigo-400"></span>
+    </span>
+</h1>
+<p>If you have insightful information or spotted an error, email or message me and I&rsquo;ll make sure to add/correct that information.</p>
+<div class="my-7 rounded-sm border border-gray-800/80 bg-black/40 overflow-hidden">
+  <div class="flex items-center justify-between px-4 py-2 border-b border-gray-800/70 bg-[#070709]">
+    <span class="text-xs uppercase tracking-widest text-gray-500">text</span>
+    <span class="text-xs text-gray-600 font-mono">///</span>
+  </div>
+  <div class="codewrap overflow-x-auto">
+    <div class="p-4"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>me+blog [at] wolfarmoon [dot] dev</span></span></code></pre></div></div>
+  </div>
+</div>
+<style>
+  .codewrap pre,
+  .codewrap .chroma { background: transparent !important; margin: 0 !important; }
+  .codewrap pre { padding: 0 !important; overflow: visible !important; }
+  .codewrap code { background: transparent !important; border: 0 !important; padding: 0 !important; font-size: 0.95rem; line-height: 1.55; color: rgba(229, 231, 235, 0.92); }
+  .codewrap { background: rgba(0,0,0,0.20); }
+</style><p>Use &ldquo;[Got Hacked? What to do next]&rdquo; as a prefix to your subject.</p>
+<p>You can also text on matrix, check it out on my website. You can use my discord too, but I don&rsquo;t usually accept messages.</p>
+
+      </div>
+    </div>
+  </article>
+</div>
+
+<style>
+  .toc {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .toc ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .toc li {
+    position: relative;
+    margin: 0.35rem 0;
+    padding-left: 1.25rem;
+     
+    overflow-wrap: anywhere;
+     
+    word-break: break-word;
+  }
+
+  .toc a {
+    display: block;
+     
+    padding: 0.15rem 0;
+    color: rgba(209, 213, 219, 0.92);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(99, 102, 241, 0.85);
+    text-underline-offset: 3px;
+  }
+
+   
+  .toc ul ul {
+    margin: 0.4rem 0 0.4rem 0.35rem;
+    padding-left: 0.9rem;
+    border-left: 1px solid rgba(55, 65, 81, 0.6);
+  }
+
+  .toc ul ul>li {
+    padding-left: 1.75rem;
+  }
+
+   
+  .toc ul ul>li::before {
+    content: "├";
+    position: absolute;
+    left: 0.35rem;
+    top: 0.2rem;
+     
+    color: rgba(99, 102, 241, 0.75);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .toc ul ul>li:last-child::before {
+    content: "└";
+  }
+
+   
+  @media (min-width: 1024px) {
+    .toc {
+      max-height: calc(100vh - 9rem);
+      overflow: auto;
+      padding-right: 0.25rem;
+    }
+  }
+
+
+   
+  .md-content ul,
+  .md-content ol {
+    margin: 1rem 0;
+    padding-left: 1.35rem;
+  }
+
+  .md-content ul {
+    list-style: disc;
+  }
+
+  .md-content ul ul {
+    list-style: circle;
+  }
+
+  .md-content ul ul ul {
+    list-style: square;
+  }
+
+  .md-content ol {
+    list-style: decimal;
+  }
+
+  .md-content ol ol {
+    list-style: lower-roman;
+  }
+
+  .md-content ol ol ol {
+    list-style: lower-alpha;
+  }
+
+  .md-content li {
+    margin: 0.35rem 0;
+  }
+
+   
+  .md-content pre,
+  .md-content code {
+    tab-size: 4;
+  }
+</style>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="border-t border-gray-800 bg-[#070709] text-gray-400">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between py-6 space-y-4 md:space-y-0">
+
+      
+      <div class="text-sm sm:text-base md:text-lg">
+        <span class="relative inline-block">
+          © 2026 Wolfarmoon. All rights reserved. <br>
+          Made with <a href="https://gohugo.io" target="_blank">Hugo</a> | <a
+            href="https://github.com/Enerhim/enervoid-theme" target="_blank">Enervoid</a>
+        </span>
+      </div>
+
+      
+      <div class="flex items-center space-x-6 text-sm sm:text-base md:text-lg">
+
+        
+        <a href='https://codeberg.org/wolfarmoon' target="_blank" rel="noopener"
+          class="group relative inline-block transition-colors duration-200 hover:text-gray-200">
+          
+          <i class="devicon-forgejo-plain"></i>
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        
+        <a href='https://wolfarmoon.itch.io/' target="_blank" rel="noopener"
+          class="group relative inline-block transition-colors duration-200 hover:text-gray-200">
+          
+          <i class="fa-brands fa-itch-io"></i>
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0 bg-indigo-400 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  </footer>
+</body>
+
+</html>
